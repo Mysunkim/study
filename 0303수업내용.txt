@@ -1,0 +1,285 @@
+오늘 해야될것
+데일리메이크업알아보기 (해결)
+떡케이크알아보기(알콩케이크or홍홍케이크)
+구매-쓰레기통,빨래통,청소도구,로션,미스트(=스킨)
+
+3월10->11(서울에서1박)//
+11일,3시까지 샾으로이동해서 머리만들기,(서울->안양이동)
+12->출국
+
+
+점심시간에 은행가서 체크카드만들기
+12,13
+abc마트가서 신발보기
+---------------------------------------------------------------------------------------------
+3월3일 수업내용
+
+※움직이지않음(이유알아보기)
+#include <stdio.h>
+
+
+struct profile {
+	char name[20];
+	double grade;
+	int english;
+};
+
+void input_data(struct profile* sp);
+void elite(struct profile* sp);
+
+
+int main()
+{
+	struct profile new_staff[5];
+	printf("이름,학점,영어 점수를 입력하세요");
+
+	return 0;
+}
+
+void input_data(struct profile* sp) {
+
+	int i;
+
+	printf("이름,학점,영어 점수를 입력하세요");
+	for (i = 0; i < 5; i++) {
+		//scanf_s("%s%lf%d",sp->name,sp->grade,sp->english);내가한것
+		scanf_s("%s%lf%d", (sp + i)->name,&(sp+i)->grade, &(sp + i)->english);
+		
+	}
+
+}
+
+void elite(struct profile* sp) {
+	int i;
+	//학점 4.0이상이고 영어점수 900점이상
+	for (i = 0; i < 5; i++) {
+		if (&(sp + i)->grade && &(sp + i)->english > 900)
+		{
+			printf("%s,%.1lf,%d\n",(sp+i)->name,(sp+i)->grade,(sp+i)->english);
+		}
+		
+		
+
+	}
+}
+---------------------------------
+열거형예제1)
+#include <stdio.h>
+
+//열거형
+enum season {spring,summer,fall,winter};
+int main()
+{
+	enum season ss;//열거를 사용하기위한 변수선언
+	char* cp = NULL;
+
+	ss = spring;
+	switch (ss)
+	{
+	case spring:
+		cp = "inline";
+		break;
+	case summer:
+		cp = "swimming";
+		break;
+	case fall:
+		cp = "trip";
+		break;
+	case winter:
+		cp = "skiing";
+		break;
+	}
+
+	printf("나의 레저활동-->%s\n", cp);
+	return 0;
+}
+
+--------------------------------------
+열거형예제2)
+#include <stdio.h>
+
+typedef struct
+{
+	int num;
+	double grade;
+}Student;
+void data_prn(Student*);//함수선언
+
+int main()
+{
+	Student s1 = {315,4.2};
+	data_prn(&s1);
+	return 0;
+}
+
+void data_prn(Student *sp);
+{
+	printf("학번: %d\n", sp->num);
+	printf("학점: %.1lf\n", sp->grade);
+}
+	
+-----------------------------------------------
+typedef 예제1)
+#include <stdio.h>
+
+typedef int INT;
+typedef int* PTR_INT;
+
+typedef unsigned int UINT;
+typedef unsigned int* PTR_UINT;
+
+typedef unsigned char UCHAR;
+typedef unsigned char* PTR_UCHAR;
+
+
+int main()
+{
+	INT num1 = 120;
+	PTR_INT pnum1 = &num1;
+
+	UINT num2 = 190;
+	PTR_UINT pnum2 = &num2;
+
+	UCHAR ch = 'Z';
+	PTR_UCHAR pch = &ch;
+
+	printf("%d,%u,%c\n",*pnum1,*pnum2,*pch);
+	return 0;
+}
+-------------------------
+typedef 예제2)
+#include <stdio.h>
+
+struct point {
+	int xpos;
+	int ypos;
+};
+
+typedef struct point Point;//재정의
+typedef struct person {
+	char name[20];
+	char phoneNumber[20];
+	int age;
+
+}Person;
+
+
+int main()
+{
+	Point pos = {10,20};
+	Person man = {"홍길동","010-2323-3434",21};
+
+	printf("%d%d\n",pos.xpos,pos.ypos);
+	printf("%s,%s,%d살\n", man.name, man.phoneNumber, man.age);
+	return 0;
+}
+---------------------------------
+입력받아서 그문자출력하는예제)
+#include <stdio.h>
+
+typedef struct point {
+	int xpos;
+	int ypos;
+}Point;
+
+void ShowPosition(Point pos) {
+	printf("[%d,%d]\n", pos.xpos, pos.ypos);
+};
+
+Point GetCurrentPosition() {//입력받는함수
+	Point cen;//저장할곳
+	printf("Input current pos :");
+	scanf_s("%d%d",&cen.xpos,&cen.ypos);
+
+	return cen;//cen에 입력받아서 cen으로반환
+}
+
+int main()
+{
+	Point curPos = GetCurrentPosition();//함수호출(입력받는함수)
+	//받는쪽 = 주는쪽
+	//ShowPosition();
+	ShowPosition(curPos);
+	return 0;
+}
+-------------------------------------------------------
+입력 받아서 문자출력하는예제2)
+
+#include <stdio.h>
+
+//한사람의 입력정보를받아서 출력하기
+typedef struct Person {
+	char name[20];
+	char phonenumber[20];
+	int age;
+}Person;//Person이 키워드인 구조체
+
+Person GetPersonInfo() {
+
+	Person man;
+	printf("이름,전화번호,나이입력 :");
+	scanf_s("%s%s%d",man.name,20,man.phonenumber,20,&man.age);
+	/*printf("이름 입력: ");
+	scanf_s("%s", &man.name);
+	printf("전화번호 입력 : ");
+	scanf_s("%s", &man.phonenumber);
+	printf("나이 입력: ");
+	scanf_s("%d", &man.age);*/
+
+	return man;
+}
+
+void ShowPersonInfo(Person man) {//사람정보를 출력하는함수
+
+	printf("이름: %s\n,전화번호 : %s\n,나이 :%d살", man.name, man.phonenumber, man.age);
+}
+
+
+
+int main()
+{
+	Person per = GetPersonInfo();
+
+	ShowPersonInfo(per);
+	return 0;
+}
+------------------------------------------------------
+구조체 브릿지 예제4)
+#include <stdio.h>
+
+typedef struct point {
+	int xpos;
+	int ypos;
+
+}Point;
+
+Point AddPoint(Point pos1, Point pos2) {
+	Point pos = {pos1.xpos+pos2.xpos,pos1.ypos+pos2.ypos};
+
+	return pos;
+}
+
+Point MinPoint(Point pos1, Point pos2) {
+	Point pos = { pos1.xpos - pos2.xpos,pos1.ypos - pos2.ypos };
+
+	return pos;
+}
+
+
+
+int main()
+{
+	Point pos1 = {5,6};
+	Point pos2 = {2,9};
+	Point result;
+
+	result = AddPoint(pos1,pos2);
+	printf("[%d,%d]\n",result.xpos,result.ypos);
+
+	result = MinPoint(pos1, pos2);
+	printf("[%d,%d]\n", result.xpos, result.ypos);
+	return 0;
+}
+----------------------
+PythonWorkspace
+PythonProg
